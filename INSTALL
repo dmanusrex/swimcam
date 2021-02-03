@@ -1,0 +1,52 @@
+No fancy install yet, just some notes.
+
+In the install directory:
+
+swimcam.sh - should install all the needed dependencies 
+
+install_mosquitto.sh - Will build mosquitto from source. 
+  There are comments in there on how to launch it properly.
+
+
+build the camera:
+
+from the swimcam directory:
+
+mkdir build
+meson configure -C build
+ninja -C build
+
+and it should compile the camera.
+
+
+
+running it:
+
+The general concept is "master" and "cameras"/"recorders".
+
+The processes can all run on the same system.
+
+You'll need a 3 terminal windows and a media player (VLC, etc)
+
+
+On the master:
+
+run SwimCamMaster.py
+- this starts the network adverstisement service and master clock
+
+The other processes can run on separate systems or on the master:
+
+start the camera with:
+
+build/src/camera   
+
+You need to add the -m option if this is running on the same system as the master
+That will start the RTSP server and tell you the URL.
+
+Open the stream in your media player.
+
+now you can run starter_simulator.py 
+
+"s" to start a race, "r" for reset.  It will auto-increment a race number.
+
+
