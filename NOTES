@@ -1,0 +1,42 @@
+Sample Pipelines:
+
+Basic pipeline rules:
+
+Must have the RTP payloaderwith a name of pay0 for each video feed (generally 1)
+
+The textoverlay plugin must have the name "race" attached to it so the system can render the timestamp overlays correctly.
+
+It also must be binned. Put () around the pipeline.
+
+
+launch with:
+---
+
+build/src/camera pipeline="Your pipe line here"
+
+
+*STOCK* Raspberry PI Kernel Examples:
+
+
+Raspberry PI, 1280x720 @ 50fps on HD Camera Module, hardware accelerated encoding
+---
+
+"( v4l2src device=/dev/video0 ! video/x-raw,width=1280,height=720,framerate=50/1 ! textoverlay name=race ! omxh264enc b-frames=0 ! rtph264pay name=pay0 pt=96 )"
+
+Raspberry PI, 640x480 @ 90 fps, HD Camera Module, hardware accelerated encoding
+---
+
+"( v4l2src device=/dev/video0 ! video/x-raw,width=640,height=480,framerate=90/1 ! textoverlay name=race ! omxh264enc b-frames=0 ! rtph264pay name=pay0 pt=96 )"
+
+Any system, 640x480 @ 100 fps, software encoding
+---
+"( videotestsrc is-live=true ! video/x-raw,width=320,height=240,framerate=30/1 ! textoverlay name=race ! x264enc tune=zerolatency ! rtph264pay name=pay0 pt=96 )"
+
+
+Raspberry PI Notes:
+
+Running 720P @ 100 fps requires a change to the V4L2 Camera driver.  This change is pending.
+
+The HD camera shows artifacts on the current kernel. This is fixed with the 5.10 kernel update.   You can experiment after doing an rpi-update.  
+
+
