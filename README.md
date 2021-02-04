@@ -1,24 +1,50 @@
-Pre-Release Version 0.1 Notes
+# SwimCam
 
-   SwimCam is intended to be used as a low cost backup camera system for swim meets. This initial drop allows for image capture, processing and streaming via RTSP.  There is a basic centralized system to allow to allow remote cameras to locate the master and provide for synchronized time references from the starter to the camera.
+   SwimCam is intended to be used as a low cost backup camera system for swim meets. This respository currently hosts the key functional backend components.  There is a basic centralized system to allow to allow remote cameras to locate the master and provide for synchronized time references from the starter to the camera.
+
+## Requirements
+
+While this should build cleanly on most linux distros the primary development has occurred on Raspberry PIs with the HD Camera module. There is no restriction on platform or camera inherent in the code.
+
+Using Raspberry PI 4s
+
+- (All-in One) PI(4GB) w/ 64 GB flash card, HD Camera Module
+
+OR
+
+- (Master) PI(4GB) w/ SSD (future recordings) optional POE hat
+- (Lane Camera) PI(2GB) w/ 16GB flash card, POE hat
 
 
-   While this should build cleaning on most linux distros the primary development has occurred on Raspberry PIs with the HD Camera module.
+## Features
 
-   For a development setup you will need (at a minimum):
+- Early development release, features evolving
 
-   Raspberry PI 4 (4GB)
-   Min 64GB flash card
-   Raspberry PI HD Camera module
+## Installation
 
-   A "production" environment would comprise:
+- see ![INSTALL](INSTALL)
 
-   PI4 (2GB), POE HAT, HD Camera for each lane you wish to record
-   PI4 (4GB), POE HAT (Optional), SSD for the main recording/playback system
+## How it works
 
-Documents:
+1. On the main system launch SwimCamMaster.
+2. In a separate window launch the starter_simulator
+3. Launch the camera system (see ![NOTES](NOTES)) for examples
+4. Play the stream with any media player (VLC, etc)
 
-INSTALL - Basic installation, setup and operation
-PIPELINES - Sample camera pipelines for various platforms
-NOTES - Some general notes on the current development and known issues
+## License
+This software is licensed under the GNU Affero General Public License version
+3. See the [LICENSE](LICENSE) file for full details.
+
+## Changelog
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+
+### [Unreleased]
+
+- :bug: Fixed installer scripts
+- :bug: Fixed issue if the start time is after the current frame time
+
+### [0.0.1] - 2021-02-03
+
+- :sparkles: Initial release
 
