@@ -161,7 +161,7 @@ race_overlay_callback (GstPad * pad,
   walltime_str = gst_race_overlay_render_time (walltime, -5);
 
   if (raceinfo->race_running) {
-    if (raceinfo->race_basetime < ts_base) {
+    if (raceinfo->race_basetime < walltime) {
       racetime_str = g_strdup_printf ("Waiting for start...");
     } else {
       racetime = walltime - raceinfo->race_basetime;
