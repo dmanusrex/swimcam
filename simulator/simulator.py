@@ -17,7 +17,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-'''SwimCam Starter Simulator'''
+'''SwimCam Starter Simulator
+
+Based on orignal work by :
+   Wahoo! Results - https://github.com/JohnStrunk/wahoo-results
+   Copyright (C) 2020 - John D. Strunk
+'''
 
 import os
 import sys
@@ -67,7 +72,7 @@ def settings_window(root: Tk, options: StarterConfig) -> None:
         event_list = load_cts_startlists(options.get_str("start_list_dir"))
         board = starter_window(root, options, event_list)
 
-
+    # TODO: Fix testing
     def sb_test_cb():
         board = starter_window(root, options)
         #_set_test_data(board)
@@ -89,6 +94,7 @@ def starter_window(root: Tk, options: StarterConfig,
         root.resizable(True, True)
     content = Starter(root, options, events)
     content.grid(column=0, row=0, sticky="news")
+    # FIXME: Background images need fixing
     if options.get_str("image_bg") != "":
         try:
             image = Image.open(options.get_str("image_bg"))
@@ -107,19 +113,7 @@ def starter_window(root: Tk, options: StarterConfig,
     root.bind('<Double-1>', return_to_settings)
     return content
 
-def display(board: Scoreboard, heat: startlists.Heat) -> None:
-    """
-    Display a startlist.
-    """
-    board.clear()
-    board.event(heat.event, heat.event_desc)
-    board.heat(heat.heat)
-
-    for i in range(0, 10):
-        if not heat.lanes[i].is_empty():
-            board.lane(i+1, heat.lanes[i].name, heat.lanes[i].team)
-    # heat.dump()
-
+# TODO: Update to revised test requirements
 def _set_test_data(board: Scoreboard):
     board.clear()
     board.event(432, "GIRLS 13&O 1650 FREE")
@@ -144,7 +138,7 @@ def main():
     _coreHost, _corePort = _core
     print("Core aquired (", _coreHost, ")")
 
-#    Gst.init(None)
+    Gst.init(None)
     root = Tk()
 
     config = StarterConfig()
