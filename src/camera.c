@@ -161,14 +161,14 @@ race_overlay_callback (GstPad * pad,
   walltime_str = gst_race_overlay_render_time (walltime, -5);
 
   if (raceinfo->race_running) {
-    if (raceinfo->race_basetime < walltime) {
+/*    if (raceinfo->race_basetime < walltime) {
       racetime_str = g_strdup_printf ("Waiting for start...");
-    } else {
+    } else { */
       racetime = walltime - raceinfo->race_basetime;
       tmp = gst_race_overlay_render_time (racetime, 0);
-      racetime_str = g_strdup_printf ("%s %s", tmp, raceinfo->race_info_text);
+      racetime_str = g_strdup_printf ("%s\n%s", tmp, raceinfo->race_info_text);
       g_free (tmp);
-    }
+/*    } */
   } else {
     racetime_str = g_strdup_printf ("Waiting for start...");
   }
@@ -255,20 +255,21 @@ message_callback (struct mosquitto *mosq, void *obj,
   SwimCamRaceInfo *info;
   guint64 temptime;
   GError *errorcode = NULL;
+  guint partslen;
 
-  GST_DEBUG ("got message '%.*s' for topic '%s'\n", message->payloadlen,
+  GST_INFO ("got message '%.*s' for topic '%s'\n", message->payloadlen,
       (char *) message->payload, message->topic);
 
   msg_parts = g_strsplit (message->payload, "|", 0);
+  partslen = g_strv_length(msg_parts);
 
-  if (g_strv_length (msg_parts) == 0) {
+  if (partslen == 0) {
     GST_DEBUG ("Invalid starter message");
     g_strfreev (msg_parts);
     return;
   }
 
   info = (SwimCamRaceInfo *) obj;
-  /* TODO: Add names from the the start list */
 
   if (g_str_has_prefix (msg_parts[0], "START")) {
     if (g_ascii_string_to_unsigned (msg_parts[1], 10, 0, G_MAXUINT64, &temptime,
@@ -276,7 +277,14 @@ message_callback (struct mosquitto *mosq, void *obj,
       info->race_basetime = temptime;
       info->race_running = TRUE;
       g_free (info->race_info_text);
-      info->race_info_text = g_strdup_printf ("%s", msg_parts[2]);
+      /* New message format includes swimmer names */
+      if (partslen == 14) {
+         info->race_info_text = g_strdup_printf ("%s\n%s / %s", msg_parts[2],
+              msg_parts[info->left_lane_number], 
+              msg_parts[info->right_lane_number]);
+      } else {
+         info->race_info_text = g_strdup_printf ("%s", msg_parts[2]);
+      }
     } else {
       GST_DEBUG ("Start Time Conversion Failure");
       g_free (info->race_info_text);
@@ -289,7 +297,7 @@ message_callback (struct mosquitto *mosq, void *obj,
     info->race_info_text = g_strdup_printf ("Waiting for start...");
     info->race_running = FALSE;
   }
-  g_strfreev (msg_parts);
+
 }
 
 static void
@@ -334,13 +342,13 @@ main (int argc, char *argv[])
   }
   g_option_context_free (context);
 
-  if ((swimcam_left_lane < 0) || (swimcam_left_lane > 12)) {
-     g_print ("Left lane parameter must be between 0 and 12\n");
+  if ((swimcam_left_lane < 0) || (swimcam_left_lane > 10)) {
+     g_print ("Left lane parameter must be between 0 and 10\n");
      exit (1);
   }
 
-  if ((swimcam_right_lane < 0) || (swimcam_right_lane > 12)) {
-     g_print ("Right lane parameter must be between 0 and 12\n");
+  if ((swimcam_right_lane < 0) || (swimcam_right_lane > 10)) {
+     g_print ("Right lane parameter must be between 0 and 10\n");
      exit (1);
   }
 
@@ -364,8 +372,16 @@ main (int argc, char *argv[])
   raceinfo->race_test_mode = add_frame_counter;
   raceinfo->race_info_text = g_strdup ("Waiting for start...");
   raceinfo->frame_counter = 0;
-  raceinfo->left_lane_number = swimcam_left_lane;
-  raceinfo->right_lane_number = swimcam_right_lane;
+  /* set the index offset for starter messages, lane 0 means unused */
+  if (swimcam_left_lane == 0) 
+      raceinfo->left_lane_number = 13;
+  else
+      raceinfo->left_lane_number = swimcam_left_lane + 2;
+
+  if (swimcam_right_lane == 0)
+      raceinfo->right_lane_number = 13;
+  else
+      raceinfo->right_lane_number = swimcam_right_lane + 2;
 
   /* Wait for the network core (config server, timing source, etc) */
   if (ignore_master)

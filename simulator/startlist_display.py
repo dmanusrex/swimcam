@@ -429,7 +429,7 @@ class Starter(ttk.Frame):  # pylint: disable=too-many-ancestors
                 self.startlist.lane(i+1, working.lanes[i].name, working.lanes[i].team)
                 self._current_ehl_text += f"{working.lanes[i].name} ({working.lanes[i].team})|"
             else:
-                self._current_ehl_text += "|"
+                self._current_ehl_text += " |"
 
     def _handle_start_btn(self) -> None:
         _currenttime = Gst.Clock.get_time(self._masterClock)

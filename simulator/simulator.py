@@ -19,14 +19,13 @@
 
 '''SwimCam Starter Simulator
 
-Based on orignal work by :
+Based on orignal work:
    Wahoo! Results - https://github.com/JohnStrunk/wahoo-results
    Copyright (C) 2020 - John D. Strunk
 '''
 
+
 import os
-import sys
-import time
 
 from tkinter import Tk
 from typing import List
@@ -37,13 +36,12 @@ import swimcamutil
 import startlists
 import settings
 from config import StarterConfig
-from startlist_display import Scoreboard, Starter
+from startlist_display import Starter
 
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstBase', '1.0')
 from gi.repository import GObject, Gst, GstBase, GLib
-
 
 def load_cts_startlists(directory: str) -> List[startlists.Event]:
     """
@@ -114,21 +112,21 @@ def starter_window(root: Tk, options: StarterConfig,
     return content
 
 # TODO: Update to revised test requirements
-def _set_test_data(board: Scoreboard):
-    board.clear()
-    board.event(432, "GIRLS 13&O 1650 FREE")
-    board.heat(56)
+#def _set_test_data(board: Scoreboard):
+#    board.clear()
+#    board.event(432, "GIRLS 13&O 1650 FREE")
+#    board.heat(56)
     # Names from https://www.name-generator.org.uk/
-    board.lane(1, "MILLER, STEPHANIE", "TEAM1")
-    board.lane(2, "DAVIS, SARAH", "TEAM1")
-    board.lane(3, "GARCIA, ASHLEY", "TEAM1")
-    board.lane(4, "WILSON, JESSICA", "TEAM1")
-    board.lane(5, "", "")
-    board.lane(6, "MOORE, SAMANTHA", "TEAM1")
-    board.lane(7, "JACKSON, AMBER", "TEAM1")
-    board.lane(8, "TAYLOR, MELISSA", "TEAM1")
-    board.lane(9, "ANDERSON, RACHEL", "TEAM1")
-    board.lane(10, "WHITE, MEGAN", "TEAM1")
+#    board.lane(1, "MILLER, STEPHANIE", "TEAM1")
+#    board.lane(2, "DAVIS, SARAH", "TEAM1")
+#    board.lane(3, "GARCIA, ASHLEY", "TEAM1")
+#    board.lane(4, "WILSON, JESSICA", "TEAM1")
+#    board.lane(5, "", "")
+#    board.lane(6, "MOORE, SAMANTHA", "TEAM1")
+#    board.lane(7, "JACKSON, AMBER", "TEAM1")
+#    board.lane(8, "TAYLOR, MELISSA", "TEAM1")
+#    board.lane(9, "ANDERSON, RACHEL", "TEAM1")
+#    board.lane(10, "WHITE, MEGAN", "TEAM1")
 
 def main():
     '''Runs the Starter Simulator'''
