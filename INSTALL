@@ -45,8 +45,10 @@ That will start the RTSP server and tell you the URL.
 
 Open the stream in your media player.
 
-now you can run starter_simulator.py 
 
-"s" to start a race, "r" for reset.  It will auto-increment a race number.
+Run the starter simulator:
+
+cd simulator
+python3 simulator.py
 
 

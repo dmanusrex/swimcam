@@ -323,8 +323,8 @@ class Settings(ttk.Frame):  # pylint: disable=too-many-ancestors
         fr8.columnconfigure(0, weight=1)
         fr8.columnconfigure(1, weight=0)
         link_label = ttkwidgets.LinkLabel(fr8,
-            text="Documentation: https://XXXXXX.readthedocs.io/",  # pylint: disable=C0330
-            link="https://XXXX.readthedocs.io/?utm_source=wahoo_results&"  # pylint: disable=C0330
+            text="Documentation: https://swimcam.readthedocs.io/",  # pylint: disable=C0330
+            link="https://swimcam.readthedocs.io/?utm_source=swimcam&"  # pylint: disable=C0330
                  "utm_medium=config_screen&utm_campaign=docs_link",  # pylint: disable=C0330
             relief="sunken",  # pylint: disable=C0330
             padding=[5, 2])  # pylint: disable=C0330

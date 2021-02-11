@@ -26,8 +26,8 @@ OR
 
 ## How it works
 
-1. On the main system launch SwimCamMaster.
-2. In a separate window launch the starter_simulator
+1. On the main system launch SwimCamMaster from the master directory
+2. In a separate window launch the simulator from the simulator directory
 3. Launch the camera system (see ![NOTES](NOTES)) for examples
 4. Play the stream with any media player (VLC, etc)
 
@@ -41,6 +41,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### [Unreleased]
 
+- TBD
+
+### [0.0.2] - 2021-02-10
+- :sparkles: New starter simulator including example startlist files
+- :sparkles: Basic [docs](http://swimcam.readthedocs.io/)
 - :bug: Fixed installer scripts
 - :bug: Fixed issue if the start time is after the current frame time
 

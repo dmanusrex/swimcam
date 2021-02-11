@@ -120,3 +120,30 @@ Font scale
 
 **Once the simulator is configured, click the "Run Simulator" button to
 begin!**
+
+Simulator Control
+-----------------
+
+.. figure:: media/simulator.png
+   :scale: 75 %
+   :align: center
+
+
+Prev/Next Heat and Event Buttons
+    These move to the previous/or next heat buttons and the displayed start 
+    list will be used for the next start command.
+
+Start
+    This will create a start event and transmit the start time along with the
+    currently displayed start list to the cameras
+
+Reset
+    This will send a reset event to the cameras.  The cameras will simply display
+    "Waiting for start..." until a valid start command is issued.
+
+Log Window
+    The log window shows all activity including the MQTT formatted messages sent
+    to the camera.  The log is also recorded in a file.
+
+
+
